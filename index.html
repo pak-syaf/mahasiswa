@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SATU — Portal Layanan & Akademik Mahasiswa STKIP Al Hikmah</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- QR Code Library for quick scan -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#312e81',
+            }
+          },
+          animation: {
+            'gradient-x': 'gradient-x 6s ease infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            'gradient-x': {
+              '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+              '50%': { 'background-size': '200% 200%', 'background-position': 'right center' },
+            },
+            'float': {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Glassmorphism subtle effects */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    .dark .glass-card {
+      background: rgba(24, 24, 27, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.4);
+      border-radius: 9999px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: rgba(82, 82, 91, 0.5);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-zinc-950 text-slate-800 dark:text-zinc-100 min-h-screen flex flex-col font-sans transition-colors duration-300 antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Background Glow Accents -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-500/15 dark:bg-indigo-600/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -right-32 w-96 h-96 bg-fuchsia-500/15 dark:bg-fuchsia-600/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-teal-500/15 dark:bg-teal-600/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-zinc-800/80 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <!-- Logo & Campus Info -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
+          S
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xl font-black tracking-tight bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">SATU</span>
+            <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 rounded-full border border-indigo-200 dark:border-indigo-800">STKIP Al Hikmah</span>
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-zinc-400 hidden sm:block">Satu Akses Terpadu Layanan, Riset & MBKM Mahasiswa</p>
+        </div>
+      </a>
+
+      <!-- Header Actions -->
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <!-- Quick Jump: Pengumuman (Baru) -->
+        <a href="#sectionPengumuman" class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-300/40 hover:bg-blue-500/20 transition-all">
+          <i class="fa-solid fa-bullhorn text-blue-500"></i>
+          <span>Pengumuman</span>
+        </a>
+
+        <!-- Quick Jump: Unduhan -->
+        <a href="#sectionUnduhan" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-300/40 hover:bg-indigo-500/20 transition-all">
+          <i class="fa-solid fa-cloud-arrow-down text-indigo-500"></i>
+          <span>Unduhan</span>
+        </a>
+
+        <!-- Quick Jump: Online Course -->
+        <a href="#sectionOnlineCourse" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-300/40 hover:bg-rose-500/20 transition-all">
+          <i class="fa-brands fa-youtube text-rose-600 text-sm"></i>
+          <span>Online Course</span>
+        </a>
+
+        <!-- Share Button -->
+        <button onclick="openShareModal()" class="px-3 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-all flex items-center gap-2 shadow-sm" title="Bagikan Tautan Portal">
+          <i class="fa-solid fa-share-nodes text-indigo-500"></i>
+          <span class="hidden lg:inline">Bagikan</span>
+        </button>
+
+        <!-- Dark Mode Toggle -->
+        <button id="themeToggle" class="w-10 h-10 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-all flex items-center justify-center shadow-sm" title="Ganti Tema">
+          <i id="themeIcon" class="fa-regular fa-moon text-indigo-500"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 relative z-10 space-y-9">
+
+    <!-- Hero / Welcome Greeting -->
+    <section class="relative rounded-3xl p-6 sm:p-9 overflow-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-purple-950 text-white shadow-2xl shadow-indigo-950/25 border border-indigo-800/40">
+      <!-- Background pattern decor -->
+      <div class="absolute -right-12 -bottom-12 w-72 h-72 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute right-8 top-4 opacity-10 text-9xl font-black select-none pointer-events-none font-mono">SATU</div>
+
+      <div class="relative z-10 max-w-2xl space-y-3">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-indigo-200">
+          <span id="greetingTime">👋 Halo Sivitas Akademika!</span>
+          <span class="text-white/40">•</span>
+          <span id="currentDateFormatted" class="font-normal text-white/80"></span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+          Pusat Pengumuman, Unduhan, Riset & Layanan <span class="bg-gradient-to-r from-pink-300 via-amber-200 to-indigo-200 bg-clip-text text-transparent">STKIP Al Hikmah.</span>
+        </h1>
+        <p class="text-sm sm:text-base text-indigo-100/90 leading-relaxed font-normal">
+          Akses cepat surat edaran pimpinan, berkas unduhan Drive resmi, format skripsi & MBKM, kuliah daring dosen, pengajuan surat aktif, hingga aspirasi Lapor Tad.
+        </p>
+      </div>
+
+      <!-- Quick Search & Category Filter Bar -->
+      <div class="relative z-10 mt-6 pt-5 border-t border-white/15 space-y-4">
+        <div class="relative max-w-xl">
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input 
+            type="text" 
+            id="searchInput"
+            placeholder="Cari pengumuman, unduhan drive, skripsi, MBKM, lapor tad, atau dosen..." 
+            class="w-full pl-11 pr-10 py-3.5 text-sm rounded-2xl bg-white/95 dark:bg-zinc-900/95 text-slate-900 dark:text-zinc-100 placeholder:text-slate-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-4 focus:ring-indigo-400/50 shadow-xl border border-white/20 transition-all"
+          />
+          <button id="clearSearch" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 text-xs p-1">
+            <i class="fa-solid fa-circle-xmark text-sm"></i>
+          </button>
+        </div>
+
+        <!-- Category Quick Filters (Mobile scrollable) -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
+          <button onclick="filterCategory('all')" class="filter-btn active px-3.5 py-1.5 rounded-xl font-semibold bg-white text-indigo-900 shadow-sm whitespace-nowrap transition-all border border-white/30">Semua</button>
+          <button onclick="filterCategory('pengumuman')" class="filter-btn px-3.5 py-1.5 rounded-xl font-medium bg-white/10 hover:bg-white/20 text-white whitespace-nowrap transition-all border border-white/15">
+            <i class="fa-solid fa-bullhorn mr-1.5 text-blue-300"></i>Papan Pengumuman
+          </button>
+          <button onclick="filterCategory('unduhan')" class="filter-btn px-3.5 py-1.5 rounded-xl font-medium bg-white/10 hover:bg-white/20 text-white whitespace-nowrap transition-all border border-white/15">
+            <i class="fa-solid fa-cloud-arrow-down mr-1.5 text-emerald-300"></i>Pusat Unduhan & Drive
+          </button>
+          <button onclick="filterCategory('online-course')" class="filter-btn px-3.5 py-1.5 rounded-xl font-medium bg-white/10 hover:bg-white/20 text-white whitespace-nowrap transition-all border border-white/15">
+            <i class="fa-brands fa-youtube mr-1.5 text-rose-300"></i>Online Course Dosen
+          </button>
+          <button onclick="filterCategory('administrasi')" class="filter-btn px-3.5 py-1.5 rounded-xl font-medium bg-white/10 hover:bg-white/20 text-white whitespace-nowrap transition-all border border-white/15">Administrasi & Surat</button>
+          <button onclick="filterCategory('prestasi')" class="filter-btn px-3.5 py-1.5 rounded-xl font-medium bg-white/10 hover:bg-white/20 text-white whitespace-nowrap transition-all border border-white/15">Galeri & Riset</button>
+          <button onclick="filterCategory('lapor')" class="filter-btn px-3.5 py-1.5 rounded-xl font-medium bg-white/10 hover:bg-white/20 text-white whitespace-nowrap transition-all border border-white/15">Lapor Tad</button>
+          <button onclick="filterCategory('sekprodi')" class="filter-btn px-3.5 py-1.5 rounded-xl font-medium bg-white/10 hover:bg-white/20 text-white whitespace-nowrap transition-all border border-white/15">Kontak Sekprodi</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: FITUR PENGUMUMAN MAHASISWA (FITUR BARU) -->
+    <section class="space-y-4 filter-section" data-cat="pengumuman" id="sectionPengumuman">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <div class="w-2.5 h-7 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full"></div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg sm:text-xl font-bold tracking-tight">Papan Pengumuman & Surat Edaran</h2>
+              <span class="px-2 py-0.5 text-[10px] font-bold uppercase rounded-full bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                <i class="fa-solid fa-bell mr-1 animate-pulse"></i>Resmi Terverifikasi
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-zinc-400">
+              Pusat surat edaran, kalender akademik, jadwal perkuliahan, dan pengumuman resmi pimpinan STKIP Al Hikmah.
+            </p>
+          </div>
+        </div>
+
+        <a 
+          href="https://drive.google.com/drive/folders/1o6-YAoAuxC3i8RfZjfGny-1rixVIBhbd?usp=sharing" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          onclick="celebrateClick()"
+          class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition-all self-start sm:self-auto"
+        >
+          <i class="fa-brands fa-google-drive text-sm"></i>
+          <span>Buka Drive Pengumuman</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+        </a>
+      </div>
+
+      <!-- Hero Banner Pengumuman Cloud Drive -->
+      <div class="searchable-card rounded-3xl p-6 sm:p-7 bg-gradient-to-r from-blue-900/90 via-indigo-900/80 to-slate-900 text-white relative overflow-hidden border border-blue-700/50 shadow-xl" data-keywords="pengumuman surat edaran google drive arsip resmi kalender akademik ujian sk yudisium wisuda stkip al hikmah">
+        <div class="absolute -right-8 -bottom-8 w-60 h-60 bg-blue-500/20 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+          <div class="space-y-2 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[11px] font-bold text-blue-200 border border-white/20">
+              <i class="fa-solid fa-folder-open text-amber-300"></i>
+              <span>Google Drive Pengumuman Resmi</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black tracking-tight text-white">
+              Folder Arsip Digital Pengumuman & Edaran Kampus
+            </h3>
+            <p class="text-xs sm:text-sm text-blue-100/90 leading-relaxed">
+              Seluruh surat edaran resmi Ketua, Wakil Ketua, BAAK, serta Kepanitiaan Semester dapat diakses secara real-time dan transparan dalam folder Google Drive terpadu berikut.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row md:flex-col gap-2.5 w-full md:w-auto min-w-[200px]">
+            <a 
+              href="https://drive.google.com/drive/folders/1o6-YAoAuxC3i8RfZjfGny-1rixVIBhbd?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onclick="celebrateClick()"
+              class="py-3 px-5 rounded-xl bg-white text-blue-900 hover:bg-blue-50 text-xs font-bold flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95"
+            >
+              <i class="fa-brands fa-google-drive text-base text-blue-600"></i>
+              <span>Kunjungi Google Drive</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+            <button 
+              onclick="copyToClipboard('https://drive.google.com/drive/folders/1o6-YAoAuxC3i8RfZjfGny-1rixVIBhbd?usp=sharing', 'Link Google Drive Pengumuman berhasil disalin!')" 
+              class="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center justify-center gap-2 border border-white/20 transition-colors"
+            >
+              <i class="fa-regular fa-copy"></i>
+              <span>Salin Tautan Drive</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-grid: Kategori Pengumuman yang Selalu Tersedia di Drive -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- CARD PENGUMUMAN 1: Kalender & Jadwal Kuliah -->
+        <div class="searchable-card glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:shadow-lg transition-all flex flex-col justify-between group" data-keywords="kalender akademik jadwal kuliah krs herregistrasi semester ganjil genap libur perkuliahan pengumuman">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-11 h-11 rounded-xl bg-blue-100 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">
+                <i class="fa-regular fa-calendar-check"></i>
+              </div>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                Akademik
+              </span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              Kalender Akademik & Jadwal Kuliah
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+              Jadwal pelaksanaan registrasi semester, batas pengisian KRS, masa aktif perkuliahan, pekan UTS/UAS, dan agenda libur semester.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400 dark:text-zinc-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-info text-blue-500 text-[10px]"></i> Cek di Drive
+            </span>
+            <a 
+              href="https://drive.google.com/drive/folders/1o6-YAoAuxC3i8RfZjfGny-1rixVIBhbd?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+            >
+              <span>Buka Dokumen</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- CARD PENGUMUMAN 2: Surat Edaran Perkuliahan & Kebijakan Kampus -->
+        <div class="searchable-card glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-indigo-500/50 dark:hover:border-indigo-500/50 hover:shadow-lg transition-all flex flex-col justify-between group" data-keywords="surat edaran ketua wakil ketua kebijakan seragam tata tertib asrama libur hari raya cuti akademik pengumuman">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-11 h-11 rounded-xl bg-indigo-100 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg font-bold">
+                <i class="fa-solid fa-stamp"></i>
+              </div>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                Surat Edaran
+              </span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+              Edaran Pimpinan & Tata Tertib
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+              Kumpulan Surat Keputusan (SK) dan Surat Edaran (SE) resmi pimpinan mengenai pedoman kampus berasrama dan perkuliahan.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400 dark:text-zinc-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-info text-indigo-500 text-[10px]"></i> Cek di Drive
+            </span>
+            <a 
+              href="https://drive.google.com/drive/folders/1o6-YAoAuxC3i8RfZjfGny-1rixVIBhbd?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
+            >
+              <span>Buka Dokumen</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- CARD PENGUMUMAN 3: Yudisium, Ujian Sidang & Wisuda -->
+        <div class="searchable-card glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-purple-500/50 dark:hover:border-purple-500/50 hover:shadow-lg transition-all flex flex-col justify-between group" data-keywords="yudisium ujian skripsi munaqasyah wisuda sarjana batas kelulusan ijazah transkrip pengumuman">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-11 h-11 rounded-xl bg-purple-100 dark:bg-purple-950/70 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg font-bold">
+                <i class="fa-solid fa-user-graduate"></i>
+              </div>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                Kelulusan
+              </span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+              Ujian Sidang, Yudisium & Wisuda
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+              Pengumuman alur pendaftaran sidang munaqasyah skripsi, persyaratan bebas tanggungan perpustakaan, hingga berkas kelulusan wisuda.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400 dark:text-zinc-500 flex items-center gap-1">
+              <i class="fa-solid fa-circle-info text-purple-500 text-[10px]"></i> Cek di Drive
+            </span>
+            <a 
+              href="https://drive.google.com/drive/folders/1o6-YAoAuxC3i8RfZjfGny-1rixVIBhbd?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="font-semibold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1"
+            >
+              <span>Buka Dokumen</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: PUSAT UNDUHAN FORMAT & REPOSITORI DRIVE TERINTEGRASI -->
+    <section class="space-y-4 filter-section" data-cat="unduhan" id="sectionUnduhan">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <div class="w-2.5 h-7 bg-gradient-to-b from-emerald-500 to-teal-600 rounded-full"></div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg sm:text-xl font-bold tracking-tight">Pusat Unduhan & Repositori Berkas</h2>
+              <span class="px-2 py-0.5 text-[10px] font-bold uppercase rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                Terintegrasi Drive Resmi
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-zinc-400">
+              Akses cepat berkas Google Drive unduhan kampus, template proposal & skripsi baku (v2.0), dan pedoman MBKM 2025.
+            </p>
+          </div>
+        </div>
+
+        <a 
+          href="https://drive.google.com/drive/folders/1qKYH6zf3xMzsrdpKLS90tkSDk6-fGF0D?usp=sharing" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          onclick="celebrateClick()"
+          class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition-all self-start sm:self-auto"
+        >
+          <i class="fa-brands fa-google-drive text-sm"></i>
+          <span>Buka Drive Unduhan</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+        </a>
+      </div>
+
+      <!-- Banner Repositori Google Drive Unduhan Terpadu -->
+      <div class="searchable-card rounded-3xl p-6 sm:p-7 bg-gradient-to-r from-emerald-900/90 via-teal-900/80 to-slate-900 text-white relative overflow-hidden border border-emerald-700/50 shadow-xl" data-keywords="google drive unduhan download berkas file folder lengkap stkip al hikmah formulir template dokumen mahasiswa">
+        <div class="absolute -right-8 -bottom-8 w-60 h-60 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+          <div class="space-y-2 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[11px] font-bold text-emerald-200 border border-white/20">
+              <i class="fa-solid fa-cloud-arrow-down text-emerald-300"></i>
+              <span>Google Drive Unduhan Resmi Terpadu</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black tracking-tight text-white">
+              Folder Utama Dokumen, Format & Panduan Kampus
+            </h3>
+            <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
+              Seluruh berkas panduan akademik, formulir administratif, juknis program, dan template penulisan resmi tersinkronisasi langsung dalam folder cloud drive berikut untuk kemudahan mahasiswa.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row md:flex-col gap-2.5 w-full md:w-auto min-w-[200px]">
+            <a 
+              href="https://drive.google.com/drive/folders/1qKYH6zf3xMzsrdpKLS90tkSDk6-fGF0D?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onclick="celebrateClick()"
+              class="py-3 px-5 rounded-xl bg-white text-emerald-950 hover:bg-emerald-50 text-xs font-bold flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95"
+            >
+              <i class="fa-brands fa-google-drive text-base text-emerald-600"></i>
+              <span>Akses Folder Google Drive</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+            <button 
+              onclick="copyToClipboard('https://drive.google.com/drive/folders/1qKYH6zf3xMzsrdpKLS90tkSDk6-fGF0D?usp=sharing', 'Link Google Drive Unduhan berhasil disalin!')" 
+              class="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center justify-center gap-2 border border-white/20 transition-colors"
+            >
+              <i class="fa-regular fa-copy"></i>
+              <span>Salin Tautan Drive</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kartu-kartu Unduhan Template Format (Terintegrasi Langsung) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+        <!-- UNDUHAN 1: Format Proposal Skripsi -->
+        <div class="searchable-card glass-card rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden border border-slate-200/80 dark:border-zinc-800" data-keywords="format proposal skripsi stkip al hikmah download unduhan bab 1 2 3 seminar proposal persetujuan pengesahan drive">
+          <div class="absolute top-0 right-0 w-28 h-28 bg-indigo-500/10 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+          
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl font-bold">
+                <i class="fa-regular fa-file-lines"></i>
+              </div>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-900/60 text-indigo-600 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                v2.0 DOCX
+              </span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+              Format Proposal Skripsi
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+              Format baku seminar proposal STKIP Al Hikmah. Memuat struktur cover logo, lembar persetujuan pembimbing, lembar pengesahan dewan penguji, Bab 1 (Pendahuluan), Bab 2 (Kajian Pustaka), Bab 3 (Metode Penelitian), dan Daftar Pustaka APA 7th.
+            </p>
+
+            <!-- Highlights Checklist -->
+            <ul class="mt-3.5 space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> Judul maks. 15 kata Bahasa Indonesia</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> Halaman Persetujuan & Pengesahan</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> Template Bab 1 sampai Bab 3</li>
+            </ul>
+          </div>
+
+          <div class="mt-5 pt-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-2">
+            <button 
+              onclick="downloadDocument('proposal')" 
+              class="flex-1 py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-all"
+            >
+              <i class="fa-solid fa-download"></i>
+              <span>Unduh File</span>
+            </button>
+            <button 
+              onclick="openDocPreview('proposal')" 
+              title="Lihat Struktur Template"
+              class="p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors text-xs"
+            >
+              <i class="fa-regular fa-eye"></i>
+            </button>
+            <a 
+              href="https://drive.google.com/drive/folders/1qKYH6zf3xMzsrdpKLS90tkSDk6-fGF0D?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              title="Buka di Drive"
+              class="p-2.5 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 transition-colors text-xs"
+            >
+              <i class="fa-brands fa-google-drive"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- UNDUHAN 2: Format Skripsi Lengkap -->
+        <div class="searchable-card glass-card rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden border border-slate-200/80 dark:border-zinc-800" data-keywords="format skripsi lengkap stkip al hikmah download unduhan bab 1 2 3 4 5 abstrak pernyataan keaslian mendeley zotero drive">
+          <div class="absolute top-0 right-0 w-28 h-28 bg-purple-500/10 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+          
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-950/70 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl font-bold">
+                <i class="fa-solid fa-book-bookmark"></i>
+              </div>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-purple-50 dark:bg-purple-900/60 text-purple-600 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                v2.0 DOCX
+              </span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+              Format Skripsi Lengkap
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+              Format lengkap ujian sidang sarjana (Bab 1 s.d. Bab 5). Dilengkapi surat pernyataan keaslian bermeterai, panduan abstrak 150 kata (INA & ENG), pembahasan hasil riset, dan format lampiran instrumen.
+            </p>
+
+            <!-- Highlights Checklist -->
+            <ul class="mt-3.5 space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> Surat Pernyataan Keaslian Meterai 10rb</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> Abstrak Dwibahasa (Indo - Inggris)</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> Sistematika Bab 1 hingga Bab 5 Lengkap</li>
+            </ul>
+          </div>
+
+          <div class="mt-5 pt-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-2">
+            <button 
+              onclick="downloadDocument('skripsi')" 
+              class="flex-1 py-2.5 px-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-all"
+            >
+              <i class="fa-solid fa-download"></i>
+              <span>Unduh File</span>
+            </button>
+            <button 
+              onclick="openDocPreview('skripsi')" 
+              title="Lihat Struktur Template"
+              class="p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors text-xs"
+            >
+              <i class="fa-regular fa-eye"></i>
+            </button>
+            <a 
+              href="https://drive.google.com/drive/folders/1qKYH6zf3xMzsrdpKLS90tkSDk6-fGF0D?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              title="Buka di Drive"
+              class="p-2.5 rounded-xl border border-purple-200 dark:border-purple-800 bg-purple-50/50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 hover:bg-purple-100 transition-colors text-xs"
+            >
+              <i class="fa-brands fa-google-drive"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- UNDUHAN 3: Panduan Teknis MBKM 2025 -->
+        <div class="searchable-card glass-card rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl hover:shadow-teal-500/10 hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden border border-slate-200/80 dark:border-zinc-800" data-keywords="panduan teknis mbkm 2025 stkip al hikmah download unduhan juknis asistensi mengajar magang lppg logbook konversi sks drive">
+          <div class="absolute top-0 right-0 w-28 h-28 bg-teal-500/10 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+          
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-12 h-12 rounded-2xl bg-teal-100 dark:bg-teal-950/70 text-teal-600 dark:text-teal-400 flex items-center justify-center text-xl font-bold">
+                <i class="fa-solid fa-book-open-reader"></i>
+              </div>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-teal-50 dark:bg-teal-900/60 text-teal-600 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
+                Resmi 2025 PDF
+              </span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+              Buku Panduan Teknis MBKM 2025
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+              Juknis resmi MBKM Kelas Kerjasama STKIP Al Hikmah (No. 257/A.2.1/STKIPH/II/2025). Mengatur skema asistensi mengajar, magang santri/pesantren, pedoman konversi hingga 20 SKS, format modul ajar, dan logbook.
+            </p>
+
+            <!-- Highlights Checklist -->
+            <ul class="mt-3.5 space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> Asistensi Mengajar & Magang Pondok</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> Tabel Konversi Nilai & Eviden Wajib</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> Template Modul Ajar & Rubrik Lengkap</li>
+            </ul>
+          </div>
+
+          <div class="mt-5 pt-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-2">
+            <button 
+              onclick="downloadDocument('mbkm')" 
+              class="flex-1 py-2.5 px-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-all"
+            >
+              <i class="fa-solid fa-download"></i>
+              <span>Unduh Juknis</span>
+            </button>
+            <button 
+              onclick="openDocPreview('mbkm')" 
+              title="Lihat Rangkuman Panduan"
+              class="p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors text-xs"
+            >
+              <i class="fa-regular fa-eye"></i>
+            </button>
+            <a 
+              href="https://drive.google.com/drive/folders/1qKYH6zf3xMzsrdpKLS90tkSDk6-fGF0D?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              title="Buka di Drive"
+              class="p-2.5 rounded-xl border border-teal-200 dark:border-teal-800 bg-teal-50/50 dark:bg-teal-950/40 text-teal-600 dark:text-teal-400 hover:bg-teal-100 transition-colors text-xs"
+            >
+              <i class="fa-brands fa-google-drive"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: ONLINE COURSE - KANAL YOUTUBE DOSEN KELAS DARING -->
+    <section class="space-y-4 filter-section" data-cat="online-course" id="sectionOnlineCourse">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-2.5 h-7 bg-gradient-to-b from-rose-500 to-red-600 rounded-full"></div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg sm:text-xl font-bold tracking-tight">Online Course — Kanal YouTube Dosen</h2>
+              <span class="px-2 py-0.5 text-[10px] font-bold uppercase rounded-full bg-rose-100 dark:bg-rose-950/80 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60">
+                <i class="fa-solid fa-signal mr-1"></i>Daring & Asinkron
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-zinc-400">
+              Pusat rekaman perkuliahan daring dan video pembelajaran resmi dosen STKIP Al Hikmah Surabaya.
+            </p>
+          </div>
+        </div>
+
+        <div class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-xs font-semibold text-rose-600 dark:text-rose-400">
+          <i class="fa-brands fa-youtube text-sm"></i>
+          <span>Video Pembelajaran Terverifikasi</span>
+        </div>
+      </div>
+
+      <!-- Quick Sub-filter by Prodi for YouTube Lecturers -->
+      <div class="p-3 sm:p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-zinc-400">
+          <i class="fa-solid fa-filter text-rose-500"></i>
+          <span class="font-medium">Filter Dosen berdasarkan Program Studi:</span>
+        </div>
+        <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 text-xs no-scrollbar">
+          <button onclick="filterYtByProdi('all')" class="yt-prodi-btn active px-3 py-1 rounded-lg font-semibold bg-rose-600 text-white shadow-sm transition-all whitespace-nowrap">Semua</button>
+          <button onclick="filterYtByProdi('Matematika')" class="yt-prodi-btn px-3 py-1 rounded-lg font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 transition-all whitespace-nowrap">Matematika</button>
+          <button onclick="filterYtByProdi('Inggris')" class="yt-prodi-btn px-3 py-1 rounded-lg font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 transition-all whitespace-nowrap">B. Inggris</button>
+          <button onclick="filterYtByProdi('Fisika')" class="yt-prodi-btn px-3 py-1 rounded-lg font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 transition-all whitespace-nowrap">Fisika</button>
+          <button onclick="filterYtByProdi('Indonesia')" class="yt-prodi-btn px-3 py-1 rounded-lg font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 transition-all whitespace-nowrap">B. Indonesia</button>
+          <button onclick="filterYtByProdi('PGSD')" class="yt-prodi-btn px-3 py-1 rounded-lg font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 transition-all whitespace-nowrap">PGSD</button>
+          <button onclick="filterYtByProdi('Umum')" class="yt-prodi-btn px-3 py-1 rounded-lg font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 transition-all whitespace-nowrap">PAI & Umum</button>
+        </div>
+      </div>
+
+      <!-- Container Grid for Lecturer YouTube Cards (Populated Dynamically via JS) -->
+      <div id="youtubeLecturersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- SECTION 4: PRESTASI & RISET MAHASISWA -->
+    <section class="space-y-4 filter-section" data-cat="prestasi">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-2.5 h-6 bg-gradient-to-b from-amber-400 to-orange-500 rounded-full"></div>
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold tracking-tight">Galeri Prestasi & Riset Mahasiswa</h2>
+            <p class="text-xs text-slate-500 dark:text-zinc-400">Portal kompetisi nasional Dikti dan publikasi karya ilmiah tugas akhir sivitas akademika.</p>
+          </div>
+        </div>
+        <span class="hidden sm:inline-block text-xs px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60 font-semibold">
+          Eksplorasi Karya
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        <!-- CARD: Galeri Lomba Mahasiswa (Simbelmawa Kemdiktisaintek) -->
+        <div class="searchable-card glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden border border-slate-200/80 dark:border-zinc-800" data-keywords="galeri lomba mahasiswa simbelmawa kemdiktisaintek pkm kemendikbud riset kompetisi inovasi pkm prestasi nasional">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+          
+          <div>
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-blue-500/30">
+                <i class="fa-solid fa-trophy"></i>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 flex items-center gap-1.5">
+                <i class="fa-solid fa-award text-amber-500"></i> Kemdiktisaintek
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                Galeri Lomba Mahasiswa
+              </h3>
+            </div>
+            <p class="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-0.5">Portal Resmi Simbelmawa Kemdiktisaintek</p>
+
+            <p class="text-sm text-slate-600 dark:text-zinc-400 mt-2.5 leading-relaxed">
+              Pusat informasi kompetisi, pendanaan proposal PKM (Program Kreativitas Mahasiswa), PPK Ormawa, dan berbagai ajang talenta bergengsi mahasiswa tingkat nasional.
+            </p>
+
+            <div class="mt-4 flex flex-wrap gap-2 text-xs">
+              <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/40 flex items-center gap-1">
+                <i class="fa-solid fa-check text-emerald-500"></i> PKM & Hibah Dikti
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/40 flex items-center gap-1">
+                <i class="fa-solid fa-check text-emerald-500"></i> Akses Akun Pendamping
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-3">
+            <a 
+              href="https://simbelmawa.kemdiktisaintek.go.id/portal/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onclick="celebrateClick()"
+              class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md shadow-blue-600/20 transition-all active:scale-[0.98]"
+            >
+              <span>Buka Portal Simbelmawa</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+            
+            <button 
+              onclick="copyToClipboard('https://simbelmawa.kemdiktisaintek.go.id/portal/', 'Tautan Simbelmawa disalin!')" 
+              title="Salin Tautan Portal"
+              class="p-3 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD: Galeri Tugas Akhir Mahasiswa (Google Scholar) -->
+        <div class="searchable-card glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden border border-slate-200/80 dark:border-zinc-800" data-keywords="galeri tugas akhir mahasiswa scholar google skripsi jurnal sitasi karya ilmiah referensi dosen penelitian">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+          
+          <div>
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/30">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 flex items-center gap-1.5">
+                <i class="fa-brands fa-google text-blue-500"></i> Google Scholar
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                Galeri Tugas Akhir Mahasiswa
+              </h3>
+            </div>
+            <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">Repositori Sitasi & Publikasi Ilmiah</p>
+
+            <p class="text-sm text-slate-600 dark:text-zinc-400 mt-2.5 leading-relaxed">
+              Jelajahi kumpulan publikasi riset, artikel jurnal, skripsi, dan karya ilmiah mahasiswa bersama dosen pembimbing untuk inspirasi kajian pustaka dan metode penelitian Anda.
+            </p>
+
+            <div class="mt-4 flex flex-wrap gap-2 text-xs">
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/40 flex items-center gap-1">
+                <i class="fa-solid fa-check text-emerald-500"></i> Terindeks Google Scholar
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/40 flex items-center gap-1">
+                <i class="fa-solid fa-check text-emerald-500"></i> Sitasi & Abstrak Lengkap
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-3">
+            <a 
+              href="https://scholar.google.com/citations?user=MuG4CnkAAAAJ&hl=en" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onclick="celebrateClick()"
+              class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition-all active:scale-[0.98]"
+            >
+              <span>Buka Profil Google Scholar</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+            
+            <button 
+              onclick="copyToClipboard('https://scholar.google.com/citations?user=MuG4CnkAAAAJ&hl=en', 'Tautan Profil Google Scholar disalin!')" 
+              title="Salin Tautan Scholar"
+              class="p-3 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: LAPOR TAD (ASPIRASI & PENGADUAN MAHASISWA) -->
+    <section class="space-y-4 filter-section" data-cat="lapor" id="sectionLaporTad">
+      <div class="rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-rose-500/10 border border-amber-300/40 dark:border-amber-800/40 relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-amber-400/15 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+          <div class="space-y-2.5 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold text-xs border border-amber-500/30">
+              <i class="fa-solid fa-shield-halved text-amber-600 dark:text-amber-400"></i>
+              <span>Layanan Aspirasi & Pengaduan Amanah</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              Lapor Tad — Salurkan Aspirasi & Kendala Anda
+            </h2>
+            <p class="text-sm text-slate-600 dark:text-zinc-300 leading-relaxed">
+              Memiliki kritik membangun, kendala fasilitas, masukan akademik, atau aspirasi kemahasiswaan? Sampaikan melalui saluran resmi <strong>Lapor Tad</strong> secara transparan, solutif, dan terjaga kerahasiaannya.
+            </p>
+            <div class="flex flex-wrap items-center gap-3 pt-1 text-xs text-slate-600 dark:text-zinc-400">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Terbuka untuk semua mahasiswa</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Evaluasi berkala pimpinan</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Solusi langsung ditindaklanjuti</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row lg:flex-col gap-2.5 min-w-[220px]">
+            <a 
+              href="https://docs.google.com/forms/d/e/1FAIpQLSddpADvl9RPUVab8iKwTpRgwa3k-8xhB3IhuAaWBVnJhze5ZA/viewform?usp=publish-editor" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onclick="celebrateClick()"
+              class="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold text-sm text-center shadow-lg shadow-amber-500/25 transition-all flex items-center justify-center gap-2 active:scale-95"
+            >
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Isi Form Lapor Tad</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1"></i>
+            </a>
+            
+            <button 
+              onclick="copyToClipboard('https://docs.google.com/forms/d/e/1FAIpQLSddpADvl9RPUVab8iKwTpRgwa3k-8xhB3IhuAaWBVnJhze5ZA/viewform?usp=publish-editor', 'Link Form Lapor Tad disalin!')" 
+              class="py-2.5 px-4 rounded-xl border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm"
+            >
+              <i class="fa-regular fa-copy"></i>
+              <span>Salin Link Form</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: LAYANAN ADMINISTRASI (SURAT AKTIF & KTM) -->
+    <section class="space-y-4 filter-section" data-cat="administrasi">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-2.5 h-6 bg-indigo-600 rounded-full"></div>
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold tracking-tight">Pengajuan & Administrasi Online</h2>
+            <p class="text-xs text-slate-500 dark:text-zinc-400">Pengajuan surat resmi kampus dan pencetakan Kartu Tanda Mahasiswa (KTM).</p>
+          </div>
+        </div>
+        <span class="text-xs text-slate-400 dark:text-zinc-500 font-medium">Respons Cepat</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="adminCardsContainer">
+        
+        <!-- CARD 1: Surat Keterangan Aktif Kuliah -->
+        <div class="searchable-card glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden border border-slate-200/80 dark:border-zinc-800" data-keywords="surat keterangan aktif kuliah beasiswa tunjangan berkas formulir administrasi">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+          
+          <div>
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white flex items-center justify-center text-2xl shadow-lg shadow-indigo-500/30">
+                <i class="fa-solid fa-file-signature"></i>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/60 flex items-center gap-1.5">
+                <i class="fa-solid fa-bolt text-amber-500"></i> Google Form
+              </span>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+              Surat Keterangan Aktif Kuliah
+            </h3>
+            <p class="text-sm text-slate-600 dark:text-zinc-400 mt-2 leading-relaxed">
+              Pengajuan surat resmi untuk keperluan tunjangan gaji orang tua, syarat beasiswa, magang/PKL, BPJS, atau instansi luar.
+            </p>
+
+            <div class="mt-4 flex flex-wrap gap-2 text-xs">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 flex items-center gap-1">
+                <i class="fa-solid fa-check text-emerald-500"></i> Siapkan KTM / NIM
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 flex items-center gap-1">
+                <i class="fa-solid fa-check text-emerald-500"></i> Bukti KRS Aktif
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-3">
+            <a 
+              href="https://docs.google.com/forms/d/1LJXFlOFdSsel0VI8NQprneGvLKpbW20gyQ4_N06wV3E/viewform" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onclick="celebrateClick()"
+              class="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md shadow-indigo-600/20 transition-all active:scale-[0.98]"
+            >
+              <span>Isi Formulir Surat</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+            
+            <button 
+              onclick="copyToClipboard('https://docs.google.com/forms/d/1LJXFlOFdSsel0VI8NQprneGvLKpbW20gyQ4_N06wV3E/viewform', 'Tautan Surat Aktif disalin!')" 
+              title="Salin Tautan"
+              class="p-3 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD 2: Permohonan KTM -->
+        <div class="searchable-card glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden border border-slate-200/80 dark:border-zinc-800" data-keywords="ktm kartu tanda mahasiswa cetak hilang rusak identitas fisik barcode">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+
+          <div>
+            <div class="flex items-start justify-between mb-4">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-purple-500/30">
+                <i class="fa-solid fa-id-card"></i>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800/60 flex items-center gap-1.5">
+                <i class="fa-solid fa-link text-purple-500"></i> Shortlink s.id
+              </span>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+              Permohonan Kartu Tanda Mahasiswa (KTM)
+            </h3>
+            <p class="text-sm text-slate-600 dark:text-zinc-400 mt-2 leading-relaxed">
+              Pengajuan pembuatan KTM baru untuk mahasiswa baru, penggantian kartu yang hilang, atau perbaikan KTM rusak.
+            </p>
+
+            <div class="mt-4 flex flex-wrap gap-2 text-xs">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 flex items-center gap-1">
+                <i class="fa-solid fa-check text-emerald-500"></i> Pas Foto Formal
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 flex items-center gap-1">
+                <i class="fa-solid fa-check text-emerald-500"></i> Bukti Registrasi
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-5 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-3">
+            <a 
+              href="https://s.id/ktmstkiph" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onclick="celebrateClick()"
+              class="flex-1 py-3 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md shadow-purple-600/20 transition-all active:scale-[0.98]"
+            >
+              <span>Ajukan KTM Sekarang</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+            
+            <button 
+              onclick="copyToClipboard('https://s.id/ktmstkiph', 'Tautan Permohonan KTM disalin!')" 
+              title="Salin Tautan"
+              class="p-3 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 7: WHATSAPP SEKPRODI DIRECT CONTACT -->
+    <section class="space-y-4 filter-section" data-cat="sekprodi">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <div class="w-2.5 h-6 bg-emerald-500 rounded-full"></div>
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold tracking-tight">Hubungi Sekretaris Program Studi (Sekprodi)</h2>
+            <p class="text-xs text-slate-500 dark:text-zinc-400">Pusat informasi akademik, konversi MBKM, bimbingan KRS, dan skripsi di STKIP Al Hikmah.</p>
+          </div>
+        </div>
+        
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-200/70 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 text-xs font-medium self-start sm:self-auto">
+          <i class="fa-regular fa-clock text-indigo-500"></i>
+          <span>Senin - Jumat (08.00 - 15.00 WIB)</span>
+        </div>
+      </div>
+
+      <!-- Generator Template WhatsApp Mini Bar -->
+      <div class="p-4 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 shadow-sm">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-lg flex-shrink-0">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-emerald-950 dark:text-emerald-200">Kirim Pesan Otomatis & Santun</h4>
+            <p class="text-xs text-emerald-800/80 dark:text-emerald-400/90">Pilih topik dan format salam akan dirangkai secara sopan & terstruktur untuk Sekprodi.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 w-full md:w-auto">
+          <select id="chatTopic" class="w-full md:w-auto text-xs px-3.5 py-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-emerald-300 dark:border-emerald-700 text-slate-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="umum">📋 Topik: Informasi & Pertanyaan Umum</option>
+            <option value="krs">📝 Topik: Bimbingan KRS & Nilai</option>
+            <option value="skripsi">🎓 Topik: Pengajuan Judul & Bimbingan Skripsi</option>
+            <option value="mbkm">🏫 Topik: Pelaksanaan & Rekognisi MBKM 2025</option>
+            <option value="surat">📑 Topik: Konfirmasi Surat / Tanda Tangan</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Prodi Grid Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="prodiGrid">
+
+        <!-- Prodi 1: Pendidikan Matematika -->
+        <div class="searchable-card glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all duration-200 flex flex-col justify-between group shadow-sm hover:shadow-md" data-keywords="pendidikan matematika math sekprodi 081235734949 guru matematika skripsi kalkulus">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">
+                <i class="fa-solid fa-calculator"></i>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-400 dark:text-zinc-500 tracking-wider uppercase">Sekprodi</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              Pendidikan Matematika
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-mono">0812-3573-4949</p>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-2">
+            <button 
+              onclick="sendWhatsApp('081235734949', 'Pendidikan Matematika')" 
+              class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-sm"
+            >
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+              <span>Chat WA</span>
+            </button>
+            <button 
+              onclick="copyToClipboard('081235734949', 'Nomor Sekprodi Pend. Matematika disalin!')" 
+              title="Salin Nomor HP"
+              class="p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors text-xs"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Prodi 2: Pendidikan Bahasa Inggris -->
+        <div class="searchable-card glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all duration-200 flex flex-col justify-between group shadow-sm hover:shadow-md" data-keywords="pendidikan bahasa inggris english sekprodi 081806701996 guru inggris toefl">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950/70 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg font-bold">
+                <i class="fa-solid fa-language"></i>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-400 dark:text-zinc-500 tracking-wider uppercase">Sekprodi</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+              Pendidikan Bahasa Inggris
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-mono">0818-0670-1996</p>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-2">
+            <button 
+              onclick="sendWhatsApp('081806701996', 'Pendidikan Bahasa Inggris')" 
+              class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-sm"
+            >
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+              <span>Chat WA</span>
+            </button>
+            <button 
+              onclick="copyToClipboard('081806701996', 'Nomor Sekprodi Pend. B. Inggris disalin!')" 
+              title="Salin Nomor HP"
+              class="p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors text-xs"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Prodi 3: Pendidikan Fisika -->
+        <div class="searchable-card glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all duration-200 flex flex-col justify-between group shadow-sm hover:shadow-md" data-keywords="pendidikan fisika physics sekprodi 082218241300 sains ipa eksperimen">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg font-bold">
+                <i class="fa-solid fa-atom"></i>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-400 dark:text-zinc-500 tracking-wider uppercase">Sekprodi</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-3 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+              Pendidikan Fisika
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-mono">0822-1824-1300</p>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-2">
+            <button 
+              onclick="sendWhatsApp('082218241300', 'Pendidikan Fisika')" 
+              class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-sm"
+            >
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+              <span>Chat WA</span>
+            </button>
+            <button 
+              onclick="copyToClipboard('082218241300', 'Nomor Sekprodi Pend. Fisika disalin!')" 
+              title="Salin Nomor HP"
+              class="p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors text-xs"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Prodi 4: Pendidikan Bahasa Indonesia -->
+        <div class="searchable-card glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all duration-200 flex flex-col justify-between group shadow-sm hover:shadow-md" data-keywords="pendidikan bahasa indonesia indonesia sekprodi 082186636276 sastra linguistik">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-950/70 text-red-600 dark:text-red-400 flex items-center justify-center text-lg font-bold">
+                <i class="fa-solid fa-book-open"></i>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-400 dark:text-zinc-500 tracking-wider uppercase">Sekprodi</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-3 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
+              Pendidikan Bahasa Indonesia
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-mono">0821-8663-6276</p>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-2">
+            <button 
+              onclick="sendWhatsApp('082186636276', 'Pendidikan Bahasa Indonesia')" 
+              class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-sm"
+            >
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+              <span>Chat WA</span>
+            </button>
+            <button 
+              onclick="copyToClipboard('082186636276', 'Nomor Sekprodi Pend. B. Indonesia disalin!')" 
+              title="Salin Nomor HP"
+              class="p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors text-xs"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Prodi 5: PGSD -->
+        <div class="searchable-card glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all duration-200 flex flex-col justify-between group shadow-sm hover:shadow-md sm:col-span-2 lg:col-span-1" data-keywords="pgsd pendidikan guru sekolah dasar sekprodi 085648107796 guru kelas sd">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-950/70 text-teal-600 dark:text-teal-400 flex items-center justify-center text-lg font-bold">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-400 dark:text-zinc-500 tracking-wider uppercase">Sekprodi</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-3 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+              PGSD (Pendidikan Guru Sekolah Dasar)
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-mono">0856-4810-7796</p>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-2">
+            <button 
+              onclick="sendWhatsApp('085648107796', 'PGSD')" 
+              class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-sm"
+            >
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+              <span>Chat WA</span>
+            </button>
+            <button 
+              onclick="copyToClipboard('085648107796', 'Nomor Sekprodi PGSD disalin!')" 
+              title="Salin Nomor HP"
+              class="p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors text-xs"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Not Found Message for Filter -->
+      <div id="noResultsMessage" class="hidden text-center py-12">
+        <div class="w-16 h-16 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-400 dark:text-zinc-500 flex items-center justify-center mx-auto mb-3 text-xl">
+          <i class="fa-solid fa-search"></i>
+        </div>
+        <p class="text-sm font-semibold text-slate-700 dark:text-zinc-300">Layanan atau Dokumen Tidak Ditemukan</p>
+        <p class="text-xs text-slate-400 dark:text-zinc-500 mt-1">Coba gunakan kata kunci lain seperti "Pengumuman", "Unduhan", "MBKM", "Skripsi", atau nama Dosen.</p>
+      </div>
+    </section>
+
+    <!-- FAQ & Etika Komunikasi Ringkas -->
+    <section class="glass-card rounded-3xl p-6 sm:p-7 border border-slate-200/80 dark:border-zinc-800 space-y-4">
+      <div class="flex items-center gap-2">
+        <i class="fa-regular fa-comments text-indigo-500 text-lg"></i>
+        <h3 class="font-bold text-base text-slate-900 dark:text-white">Etika Menghubungi Dosen & Pengajuan Layanan</h3>
+      </div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs">
+        <div class="p-4 rounded-2xl bg-slate-100/70 dark:bg-zinc-800/60 border border-slate-200/60 dark:border-zinc-700/50">
+          <p class="font-bold text-indigo-600 dark:text-indigo-400 mb-1 flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-center leading-5 text-[10px]">1</span>
+            Salam & Identitas Diri
+          </p>
+          <p class="text-slate-600 dark:text-zinc-400 leading-relaxed">Awali dengan salam sopan islami/formal, sebutkan Nama lengkap, NIM, dan Prodi/Angkatan dengan jelas.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-100/70 dark:bg-zinc-800/60 border border-slate-200/60 dark:border-zinc-700/50">
+          <p class="font-bold text-indigo-600 dark:text-indigo-400 mb-1 flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-center leading-5 text-[10px]">2</span>
+            To The Point & 1 Naskah
+          </p>
+          <p class="text-slate-600 dark:text-zinc-400 leading-relaxed">Jelaskan maksud atau pertanyaan secara lugas dalam satu pesan utuh (hindari hanya mengetik kata "P" atau spam).</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-100/70 dark:bg-zinc-800/60 border border-slate-200/60 dark:border-zinc-700/50">
+          <p class="font-bold text-indigo-600 dark:text-indigo-400 mb-1 flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-center leading-5 text-[10px]">3</span>
+            Jam Kerja Kampus
+          </p>
+          <p class="text-slate-600 dark:text-zinc-400 leading-relaxed">Utamakan menghubungi pada hari dan jam operasional kantor resmi (Senin - Jumat, 08.00 - 15.00 WIB).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: MEDIA SOSIAL & KOMUNITAS KAMPUS -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-2.5 h-6 bg-gradient-to-b from-pink-500 via-rose-500 to-indigo-600 rounded-full"></div>
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold tracking-tight">Terhubung di Media Sosial</h2>
+            <p class="text-xs text-slate-500 dark:text-zinc-400">Ikuti info lomba, kabar prestasi, tips perkuliahan, dan kabar kegiatan kampus terkini.</p>
+          </div>
+        </div>
+        <span class="hidden sm:inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60 font-semibold">
+          <i class="fa-solid fa-fire text-amber-500"></i> Follow & Connect
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- CARD: Instagram -->
+        <a 
+          href="https://www.instagram.com/alhikmahteacherinstitute/?hl=en" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          onclick="celebrateClick()"
+          class="glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-pink-500/50 dark:hover:border-pink-500/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-pink-500/10 transition-all duration-300 flex flex-col justify-between group"
+        >
+          <div>
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center text-xl shadow-md shadow-rose-500/20 group-hover:scale-105 transition-transform">
+                <i class="fa-brands fa-instagram"></i>
+              </div>
+              <span class="text-[11px] font-bold text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-950/60 border border-pink-200/60 dark:border-pink-800/40 px-2 py-0.5 rounded-full">
+                Instagram
+              </span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-3 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">
+              Al Hikmah Teacher Institute
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-mono">@alhikmahteacherinstitute</p>
+            <p class="text-xs text-slate-600 dark:text-zinc-400 mt-2 leading-relaxed">
+              Sorotan kegiatan, galeri foto, reels inspirasi guru masa depan, dan pengumuman beasiswa.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-xs font-semibold text-pink-600 dark:text-pink-400">
+            <span>Buka Instagram</span>
+            <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-0.5 -translate-y-0.5 transition-transform text-[11px]"></i>
+          </div>
+        </a>
+
+        <!-- CARD: TikTok -->
+        <a 
+          href="https://www.tiktok.com/@alhikmahteacherinstitute" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          onclick="celebrateClick()"
+          class="glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-zinc-600 dark:hover:border-zinc-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300 flex flex-col justify-between group"
+        >
+          <div>
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-zinc-950 text-white flex items-center justify-center text-xl shadow-md border border-cyan-400/40 shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+                <i class="fa-brands fa-tiktok text-cyan-400"></i>
+              </div>
+              <span class="text-[11px] font-bold text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-2 py-0.5 rounded-full">
+                TikTok
+              </span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-3 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+              TikTok Resmi Kampus
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-mono">@alhikmahteacherinstitute</p>
+            <p class="text-xs text-slate-600 dark:text-zinc-400 mt-2 leading-relaxed">
+              Video kreatif singkat seputar dinamika santri mahasiswa, micro-teaching, dan keseruan kampus.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-xs font-semibold text-slate-800 dark:text-zinc-200">
+            <span>Tonton Video</span>
+            <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-0.5 -translate-y-0.5 transition-transform text-[11px]"></i>
+          </div>
+        </a>
+
+        <!-- CARD: Portal Berita Kampus -->
+        <a 
+          href="https://news.hikmahuniversity.ac.id/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          onclick="celebrateClick()"
+          class="glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 flex flex-col justify-between group"
+        >
+          <div>
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center text-xl shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                <i class="fa-regular fa-newspaper"></i>
+              </div>
+              <span class="text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/40 px-2 py-0.5 rounded-full">
+                Portal Berita
+              </span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              Al Hikmah University News
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-mono">news.hikmahuniversity.ac.id</p>
+            <p class="text-xs text-slate-600 dark:text-zinc-400 mt-2 leading-relaxed">
+              Liputan press release, seminar nasional, pengabdian masyarakat, dan berita kemahasiswaan terpercaya.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400">
+            <span>Baca Berita</span>
+            <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-0.5 -translate-y-0.5 transition-transform text-[11px]"></i>
+          </div>
+        </a>
+
+        <!-- CARD: Facebook -->
+        <a 
+          href="https://web.facebook.com/stkip.alhikmah/?_rdc=1&_rdr#" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          onclick="celebrateClick()"
+          class="glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-indigo-500/50 dark:hover:border-indigo-500/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col justify-between group"
+        >
+          <div>
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-[#1877F2] text-white flex items-center justify-center text-xl shadow-md shadow-blue-600/20 group-hover:scale-105 transition-transform">
+                <i class="fa-brands fa-facebook-f"></i>
+              </div>
+              <span class="text-[11px] font-bold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/40 px-2 py-0.5 rounded-full">
+                Facebook
+              </span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              Fanpage STKIP Al Hikmah
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-mono">stkip.alhikmah</p>
+            <p class="text-xs text-slate-600 dark:text-zinc-400 mt-2 leading-relaxed">
+              Jejaring alumni, siaran langsung wisuda, agenda kerjasama institusi, dan dokumentasi akademik.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-xs font-semibold text-[#1877F2] dark:text-blue-400">
+            <span>Kunjungi Laman</span>
+            <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-0.5 -translate-y-0.5 transition-transform text-[11px]"></i>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-slate-200/80 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 backdrop-blur-md py-7 relative z-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-5 text-xs text-slate-500 dark:text-zinc-400">
+      
+      <div class="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
+        <span class="font-bold text-slate-800 dark:text-zinc-200 text-sm">SATU STKIP Al Hikmah</span>
+        <span class="hidden sm:inline">•</span>
+        <span>Satu Akses Terpadu Pengumuman, Unduhan, Layanan Mahasiswa & Riset</span>
+      </div>
+
+      <!-- Quick Social Icons Bar in Footer -->
+      <div class="flex items-center gap-2">
+        <a 
+          href="https://www.instagram.com/alhikmahteacherinstitute/?hl=en" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          title="Instagram"
+          class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:text-white text-slate-600 dark:text-zinc-300 flex items-center justify-center transition-all duration-200 shadow-sm"
+        >
+          <i class="fa-brands fa-instagram text-sm"></i>
+        </a>
+        <a 
+          href="https://www.tiktok.com/@alhikmahteacherinstitute" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          title="TikTok"
+          class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-black hover:text-cyan-400 text-slate-600 dark:text-zinc-300 flex items-center justify-center transition-all duration-200 shadow-sm"
+        >
+          <i class="fa-brands fa-tiktok text-sm"></i>
+        </a>
+        <a 
+          href="https://news.hikmahuniversity.ac.id/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          title="Portal Berita"
+          class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-blue-600 hover:text-white text-slate-600 dark:text-zinc-300 flex items-center justify-center transition-all duration-200 shadow-sm"
+        >
+          <i class="fa-regular fa-newspaper text-sm"></i>
+        </a>
+        <a 
+          href="https://web.facebook.com/stkip.alhikmah/?_rdc=1&_rdr#" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          title="Facebook"
+          class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-[#1877F2] hover:text-white text-slate-600 dark:text-zinc-300 flex items-center justify-center transition-all duration-200 shadow-sm"
+        >
+          <i class="fa-brands fa-facebook-f text-sm"></i>
+        </a>
+      </div>
+
+      <!-- Campus Link -->
+      <div class="flex items-center gap-2">
+        <a href="https://hikmahuniversity.ac.id" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium">hikmahuniversity.ac.id</a>
+        <span>•</span>
+        <span>Surabaya</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL: PREVIEW & DETAIL UNDUHAN DOKUMEN -->
+  <div id="previewModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white dark:bg-zinc-900 rounded-3xl max-w-2xl w-full max-h-[88vh] flex flex-col shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50/70 dark:bg-zinc-950/50">
+        <div class="flex items-center gap-2.5">
+          <div id="modalIcon" class="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold">
+            <i class="fa-solid fa-file"></i>
+          </div>
+          <div>
+            <h3 id="modalTitle" class="font-bold text-slate-900 dark:text-white text-base">Pratinjau Format</h3>
+            <p id="modalSubtitle" class="text-[11px] text-slate-500 dark:text-zinc-400">Standar resmi STKIP Al Hikmah Surabaya</p>
+          </div>
+        </div>
+        <button onclick="closeDocPreview()" class="w-8 h-8 rounded-full bg-slate-200/70 dark:bg-zinc-800 text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-colors">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable preview content) -->
+      <div id="modalContent" class="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm text-slate-700 dark:text-zinc-300 leading-relaxed font-sans">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3.5 border-t border-slate-200 dark:border-zinc-800 bg-slate-50/70 dark:bg-zinc-950/50 flex items-center justify-between gap-3">
+        <button onclick="closeDocPreview()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-zinc-400 hover:bg-slate-200/60 dark:hover:bg-zinc-800 transition-colors">
+          Tutup
+        </button>
+        <div class="flex items-center gap-2">
+          <a 
+            href="https://drive.google.com/drive/folders/1qKYH6zf3xMzsrdpKLS90tkSDk6-fGF0D?usp=sharing" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="px-3 py-2 rounded-xl border border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 text-xs font-semibold flex items-center gap-1.5 transition-all"
+          >
+            <i class="fa-brands fa-google-drive"></i>
+            <span class="hidden sm:inline">Drive Unduhan</span>
+          </a>
+          <button id="modalDownloadBtn" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center gap-2 shadow-md transition-all active:scale-95">
+            <i class="fa-solid fa-download"></i>
+            <span>Unduh Berkas</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Share / QR Code -->
+  <div id="shareModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white dark:bg-zinc-900 rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-slate-200 dark:border-zinc-800 text-center space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-bold text-slate-900 dark:text-white text-base">Bagikan Portal SATU</h3>
+        <button onclick="closeShareModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- QR Code Canvas Container -->
+      <div class="flex justify-center p-3 bg-white rounded-2xl shadow-inner border border-slate-100">
+        <div id="qrcode"></div>
+      </div>
+      <p class="text-xs text-slate-500 dark:text-zinc-400">Scan QR Code ini lewat kamera smartphone untuk langsung mengakses seluruh layanan & pengumuman.</p>
+
+      <div class="pt-2 flex gap-2">
+        <button onclick="copyToClipboard(window.location.href, 'Link Portal SATU berhasil disalin!')" class="flex-1 py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all">
+          <i class="fa-regular fa-copy"></i>
+          <span>Salin Tautan Web</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="px-4 py-3 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs sm:text-sm font-semibold shadow-2xl flex items-center gap-3 border border-slate-700 dark:border-slate-200">
+      <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-base"></i>
+      <span id="toastMessage">Tautan berhasil disalin!</span>
+    </div>
+  </div>
+
+  <script>
+    // 1. Dark Mode Management
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const html = document.documentElement;
+
+    function initTheme() {
+      if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        html.classList.remove('dark');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+      }
+    }
+    initTheme();
+
+    themeToggle.addEventListener('click', () => {
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+      }
+    });
+
+    // 2. Greeting & Date Setup
+    function updateGreeting() {
+      const now = new Date();
+      const hour = now.getHours();
+      let greeting = '👋 Halo Mahasiswa!';
+      if (hour >= 4 && hour < 11) greeting = '🌅 Semangat Pagi, Mahasiswa!';
+      else if (hour >= 11 && hour < 15) greeting = '☀️ Selamat Siang, Mahasiswa!';
+      else if (hour >= 15 && hour < 18) greeting = '⛅ Selamat Sore, Mahasiswa!';
+      else greeting = '🌙 Selamat Malam, Mahasiswa!';
+
+      const greetingElem = document.getElementById('greetingTime');
+      if (greetingElem) greetingElem.textContent = greeting;
+
+      const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const dateElem = document.getElementById('currentDateFormatted');
+      if (dateElem) dateElem.textContent = now.toLocaleDateString('id-ID', dateOptions);
+    }
+    updateGreeting();
+
+    // 3. WhatsApp Direct Chat with Dynamic Friendly Message
+    function sendWhatsApp(phoneRaw, prodiName) {
+      let phone = phoneRaw.replace(/[^0-9]/g, '');
+      if (phone.startsWith('0')) {
+        phone = '62' + phone.slice(1);
+      }
+
+      const topic = document.getElementById('chatTopic').value;
+      let topicText = '';
+      if (topic === 'surat') {
+        topicText = 'konfirmasi permohonan surat akademik dan tanda tangan';
+      } else if (topic === 'krs') {
+        topicText = 'konsultasi pengisian KRS dan validasi rencana studi semester ini';
+      } else if (topic === 'skripsi') {
+        topicText = 'konsultasi pengajuan judul proposal / bimbingan tugas akhir skripsi';
+      } else if (topic === 'mbkm') {
+        topicText = 'konsultasi asistensi mengajar / magang dan konversi nilai MBKM 2025';
+      } else {
+        topicText = 'informasi akademik dan perkuliahan program studi';
+      }
+
+      const template = `Assalamu'alaikum Warahmatullahi Wabarakatuh.\nSelamat pagi/siang Bapak/Ibu Sekprodi ${prodiName}, mohon maaf mengganggu waktunya.\n\nSaya mahasiswa prodi ${prodiName}:\nNama: \nNIM: \n\nIzin bertanya terkait ${topicText}. Apakah ada waktu luang untuk berdiskusi? Terima kasih banyak sebelumnya.`;
+
+      const encodedMsg = encodeURIComponent(template);
+      const waUrl = `https://wa.me/${phone}?text=${encodedMsg}`;
+      
+      celebrateClick();
+      window.open(waUrl, '_blank');
+    }
+
+    // 4. Copy to Clipboard Utility
+    function copyToClipboard(text, message) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(message || 'Berhasil disalin ke papan klip!');
+        }).catch(() => fallbackCopy(text, message));
+      } else {
+        fallbackCopy(text, message);
+      }
+    }
+
+    function fallbackCopy(text, message) {
+      const tempInput = document.createElement('textarea');
+      tempInput.value = text;
+      tempInput.style.position = 'fixed';
+      tempInput.style.opacity = '0';
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showToast(message || 'Berhasil disalin ke papan klip!');
+      } catch (err) {
+        showToast('Gagal menyalin otomatis');
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    // 5. Toast Notification Display
+    let toastTimeout;
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMessage');
+      toastMsg.textContent = text;
+      
+      clearTimeout(toastTimeout);
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3200);
+    }
+
+    // 6. Confetti animation
+    function celebrateClick() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 25,
+          spread: 65,
+          origin: { y: 0.85 }
+        });
+      }
+    }
+
+    // 7. Online Course - Kanal YouTube Dosen STKIP Al Hikmah Surabaya
+    const defaultLecturers = [
+      // Program Studi: Pendidikan Matematika
+      {
+        nama: "Anisa Fatwa Sari, S.Pd., M.Sc.",
+        prodi: "Pendidikan Matematika",
+        deskripsi: "Kanal @yukbermatematika | Pembahasan konsep matematika, statistika, dan tutorial analisis edukatif.",
+        youtubeUrl: "https://youtube.com/@yukbermatematika?si=euwoZdmaWHn0Uny9",
+        avatarColor: "from-blue-600 to-indigo-600"
+      },
+      {
+        nama: "Azhar Syarifuddin, S.Pd., M.Si.",
+        prodi: "Pendidikan Matematika",
+        deskripsi: "Kanal @azharsyarifuddin271 | Kuliah aljabar, kalkulus, struktur analisis, dan tutorial problem solving.",
+        youtubeUrl: "https://youtube.com/@azharsyarifuddin271?si=OAVMxbxF41ARlmrq",
+        avatarColor: "from-indigo-600 to-blue-700"
+      },
+      {
+        nama: "Kurnia Noviartati, M.Pd.",
+        prodi: "Pendidikan Matematika",
+        deskripsi: "Kanal @KurniaNoviartati | Sekprodi Matematika | Geometri, inovasi media pembelajaran & kajian matematika.",
+        youtubeUrl: "https://www.youtube.com/@KurniaNoviartati",
+        avatarColor: "from-cyan-600 to-blue-600"
+      },
+      {
+        nama: "Hakmi Rais Fauzan, S.Mat, M.Pd.",
+        prodi: "Pendidikan Matematika",
+        deskripsi: "Kanal @raisfauzan11 | Kuliah komputasi matematika, pemodelan analisis numerik, dan penalaran logis.",
+        youtubeUrl: "https://youtube.com/@raisfauzan11?si=Ilpl6aQ2GBZ8eBzH",
+        avatarColor: "from-sky-600 to-indigo-700"
+      },
+      {
+        nama: "Nabila Ekaputri W., M.Pd.",
+        prodi: "Pendidikan Matematika",
+        deskripsi: "Kanal @nabilaekaputri-m5c | Kuliah matematika, penalaran analitis & strategi pembelajaran interaktif.",
+        youtubeUrl: "https://youtube.com/@nabilaekaputri-m5c?si=qT7VYBcbKy91pFBS",
+        avatarColor: "from-blue-500 to-sky-700"
+      },
+      {
+        nama: "Zainal Abidin, S.Si., M.Pd.",
+        prodi: "Pendidikan Matematika",
+        deskripsi: "Kanal @abidinzainal736 | Kajian matematika diskrit, teori bilangan, serta rancangan pengajaran matematika.",
+        youtubeUrl: "https://www.youtube.com/@abidinzainal736",
+        avatarColor: "from-blue-700 to-purple-700"
+      },
+
+      // Program Studi: Pendidikan Fisika
+      {
+        nama: "Trise Nurul Ain, S.Pd., M.PFis.",
+        prodi: "Pendidikan Fisika",
+        deskripsi: "Kanal @trisenurulain9078 | Sekprodi Fisika | Kuliah radioaktivitas, peluruhan inti, reaksi nuklir & fisika modern.",
+        youtubeUrl: "https://youtube.com/@trisenurulain9078?si=CHF4D6HTgoaZPuHY",
+        avatarColor: "from-amber-500 to-orange-600"
+      },
+      {
+        nama: "Hari Anggit C.W, S.Pd., M.PFis.",
+        prodi: "Pendidikan Fisika",
+        deskripsi: "Kanal @anggitcahyo7399 | Ketua LPPG | Eksperimen mekanika, media laboratorium, dan panduan MBKM.",
+        youtubeUrl: "https://youtube.com/@anggitcahyo7399?si=1NwyT9WQ1VyzPp_o",
+        avatarColor: "from-orange-600 to-amber-600"
+      },
+      {
+        nama: "Muhammad Syaiful Anwar, M.Si.",
+        prodi: "Pendidikan Fisika",
+        deskripsi: "Kanal @say_fulanwar | Pembelajaran listrik magnet, fisika termal, instrumentasi & fisika komputasi.",
+        youtubeUrl: "https://youtube.com/@say_fulanwar?si=icecmeUVwL7ZRCXs",
+        avatarColor: "from-teal-600 to-emerald-700"
+      },
+      {
+        nama: "Indrawati Wilujeng, S.Pd., M.Si.",
+        prodi: "Pendidikan Fisika",
+        deskripsi: "Kanal Resmi Kuliah Fisika | Gelombang, optik, termodinamika, dan penjaminan mutu perkuliahan.",
+        youtubeUrl: "https://m.youtube.com/channel/UCNaYNSjry23d660CLEDC3_g",
+        avatarColor: "from-emerald-600 to-teal-600"
+      },
+      {
+        nama: "Dr. Faiz Hasyim, M.Pd.",
+        prodi: "Pendidikan Fisika",
+        deskripsi: "Kanal @faizhasyim | Video perkuliahan fisika, metodologi penelitian & pembelajaran sains.",
+        youtubeUrl: "https://www.youtube.com/@faizhasyim",
+        avatarColor: "from-amber-600 to-yellow-600"
+      },
+
+      // Program Studi: Pendidikan Bahasa Inggris
+      {
+        nama: "Dr. Ahmad Syafi'i, M.Pd.",
+        prodi: "Pendidikan Bahasa Inggris",
+        deskripsi: "Kanal @PAKSYAFFCHANNEL | Wakil Ketua 1 | Pedagogi guru masa depan, kebijakan akademik & riset pendidikan.",
+        youtubeUrl: "https://www.youtube.com/@PAKSYAFFCHANNEL",
+        avatarColor: "from-indigo-600 to-purple-700"
+      },
+      {
+        nama: "Fashol Hadi, M.Pd.",
+        prodi: "Pendidikan Bahasa Inggris",
+        deskripsi: "Kanal @fayenglish2106 | Sekprodi B. Inggris | English phonetics, speaking confidence, pedagogy & ELT methods.",
+        youtubeUrl: "https://youtube.com/@fayenglish2106?si=MLVSNiQMVsuK-OWx",
+        avatarColor: "from-purple-600 to-pink-600"
+      },
+      {
+        nama: "Lina Aris Ficayuma, M.Pd.",
+        prodi: "Pendidikan Bahasa Inggris",
+        deskripsi: "Kanal @linaarisficayuma1956 | English grammar, micro-teaching, and academic conversation.",
+        youtubeUrl: "https://youtube.com/@linaarisficayuma1956?si=Itmdp_w-3UhSovnT",
+        avatarColor: "from-fuchsia-600 to-purple-700"
+      },
+      {
+        nama: "Lina Aris Ficayuma, M.Pd. (LAF Connection)",
+        prodi: "Pendidikan Bahasa Inggris",
+        deskripsi: "Kanal @LAF-Connection | Pengembangan kemampuan bahasa Inggris interaktif & edukasi keguruan.",
+        youtubeUrl: "https://www.youtube.com/@LAF-Connection",
+        avatarColor: "from-pink-600 to-purple-600"
+      },
+      {
+        nama: "Alfan Hariri, M.Pd.",
+        prodi: "Pendidikan Bahasa Inggris",
+        deskripsi: "Kanal @stkipal-hikmah_alfanhariri6576 | Technology enhanced language learning & TOEFL preparation.",
+        youtubeUrl: "https://youtube.com/@stkipal-hikmah_alfanhariri6576?si=YfGKeJjgrcjejxpF",
+        avatarColor: "from-violet-600 to-indigo-600"
+      },
+      {
+        nama: "Haris Dibdyaningsih, M.Pd.",
+        prodi: "Pendidikan Bahasa Inggris",
+        deskripsi: "Kanal @harisdibdyaningsih2683 | Listening & speaking comprehension, English for Specific Purposes (ESP).",
+        youtubeUrl: "https://youtube.com/@harisdibdyaningsih2683?si=Ex-aLO8s9T-riAtz",
+        avatarColor: "from-purple-500 to-violet-700"
+      },
+      {
+        nama: "Ach. Anang Darmawan, M.Pd.",
+        prodi: "Pendidikan Bahasa Inggris",
+        deskripsi: "Kanal @achmadanangdarmawan | Bimbingan pembelajaran, strategi komunikasi, dan keterampilan bahasa.",
+        youtubeUrl: "https://youtube.com/@achmadanangdarmawan?si=8KNTqQzMgbIdvNwd",
+        avatarColor: "from-indigo-600 to-blue-600"
+      },
+      {
+        nama: "Yiyin Isgandi, Lc., M.Fil.I.",
+        prodi: "Pendidikan Bahasa Inggris",
+        deskripsi: "Kanal @duniayiyinisgandi6021 | Kajian wawasan kebahasaan, filsafat pendidikan & motivasi santri pendidik.",
+        youtubeUrl: "https://youtube.com/@duniayiyinisgandi6021?si=GXTRplHSACKwE8yJ",
+        avatarColor: "from-emerald-600 to-teal-800"
+      },
+
+      // Program Studi: Pendidikan Bahasa Indonesia
+      {
+        nama: "Rian Surya Putra, M.Pd.",
+        prodi: "Pendidikan Bahasa Indonesia",
+        deskripsi: "Kanal @riansuryaputra | Sekprodi B. Indonesia | Berbicara dialektik, retorika, sintaksis & media kreatif.",
+        youtubeUrl: "https://youtube.com/@riansuryaputra?si=lBgiFYTH8z46KLIZ",
+        avatarColor: "from-red-600 to-rose-600"
+      },
+      {
+        nama: "Rian Surya Putra, M.Pd. (Playlist Kuliah)",
+        prodi: "Pendidikan Bahasa Indonesia",
+        deskripsi: "Daftar putar seri perkuliahan resmi pembelajaran Bahasa & Sastra Indonesia STKIP Al Hikmah.",
+        youtubeUrl: "https://www.youtube.com/watch?v=NkaWnO9_IXc&list=PLQV4fnHUWCfbk-83cy99gzoRahYG_z36G&index=1",
+        avatarColor: "from-rose-600 to-red-700"
+      },
+      {
+        nama: "Ady Dwi Achmad Prasetya, S.Pd Ind., M.Pd.",
+        prodi: "Pendidikan Bahasa Indonesia",
+        deskripsi: "Kanal @adydap | Morfologi bahasa, analisis wacana sastra, dan pengajaran bahasa Indonesia komunikatif.",
+        youtubeUrl: "https://youtube.com/@adydap?si=nsscFwMNaCdeO2Fq",
+        avatarColor: "from-rose-600 to-pink-700"
+      },
+      {
+        nama: "Anwar, M.Pd.",
+        prodi: "Pendidikan Bahasa Indonesia",
+        deskripsi: "Kanal @anwartas-x2t | Wawasan keguruan, linguistik bahasa Indonesia & asesmen autentik pembelajaran.",
+        youtubeUrl: "https://www.youtube.com/@anwartas-x2t",
+        avatarColor: "from-red-500 to-orange-600"
+      },
+
+      // Program Studi: PGSD (Pendidikan Guru Sekolah Dasar)
+      {
+        nama: "M. Misbachul Huda, M.Pd.",
+        prodi: "PGSD",
+        deskripsi: "Kanal @meawmiiaw9297 | Sekprodi PGSD | Pembelajaran tematik SD, seni budaya, keterampilan pendidik guru kelas.",
+        youtubeUrl: "https://youtube.com/@meawmiiaw9297?si=Vj_N7jBOvMcYvUKN",
+        avatarColor: "from-teal-600 to-emerald-600"
+      },
+      {
+        nama: "Adhy Putri Rilianti, M.Pd.",
+        prodi: "PGSD",
+        deskripsi: "Kanal @adhyputririlianti7904 | Strategi belajar aktif anak sekolah dasar, modul tematik & inovasi kelas awal.",
+        youtubeUrl: "https://youtube.com/@adhyputririlianti7904?si=ucCpSf66KrjArrsg",
+        avatarColor: "from-teal-500 to-cyan-600"
+      },
+      {
+        nama: "Maulana Paramaditya Ananta, M.Pd.",
+        prodi: "PGSD",
+        deskripsi: "Kanal @maulanaparamadityaananta1892 | Media ajar kreatif digital untuk guru kelas dasar & simulasi pengajaran.",
+        youtubeUrl: "https://youtube.com/@maulanaparamadityaananta1892?si=qmZfu86lsMolYWEX",
+        avatarColor: "from-teal-600 to-blue-600"
+      },
+      {
+        nama: "Atika Maulidina HS, M.Pd.",
+        prodi: "PGSD",
+        deskripsi: "Kanal @atikamaulidina-d3l | Pembelajaran literasi dasar, perkembangan bahasa anak SD & microteaching.",
+        youtubeUrl: "https://youtube.com/@atikamaulidina-d3l?si=SQz41R2TbX_mO6eG",
+        avatarColor: "from-emerald-500 to-teal-600"
+      },
+      {
+        nama: "Durroh Nashihatul Ummah, M.Pd.",
+        prodi: "PGSD",
+        deskripsi: "Kanal @shihaummah5912 | Psikologi perkembangan anak usia SD, literasi numerasi dasar & praktik mengajar.",
+        youtubeUrl: "https://youtube.com/@shihaummah5912?si=quk0tRnevEi4I2m3",
+        avatarColor: "from-cyan-600 to-emerald-600"
+      },
+      {
+        nama: "Wulida Arina Najwa, M.Pd.",
+        prodi: "PGSD",
+        deskripsi: "Kanal @arinanajwa8591 | Pembelajaran sains tematik MI/SD, model kurikulum merdeka & asesmen kelas dasar.",
+        youtubeUrl: "https://youtube.com/@arinanajwa8591?si=1Q8k64MB8k4Xzc8d",
+        avatarColor: "from-green-600 to-teal-700"
+      },
+      {
+        nama: "Bambang, M.Pd.",
+        prodi: "PGSD",
+        deskripsi: "Kanal @cakbee1 | Pembelajaran inovatif anak sekolah dasar, apresiasi sastra anak & pedagogi tematik.",
+        youtubeUrl: "https://youtube.com/@cakbee1?si=L0iVWw9-CU6a8i6W",
+        avatarColor: "from-amber-600 to-emerald-600"
+      },
+      {
+        nama: "Bambang, M.Pd. (Cak Nur Bee)",
+        prodi: "PGSD",
+        deskripsi: "Kanal @caknurbeeks3989 | Media ekspresi edukasi, penulisan kreatif anak dasar & motivasi pendidik.",
+        youtubeUrl: "https://www.youtube.com/@caknurbeeks3989",
+        avatarColor: "from-orange-600 to-teal-600"
+      },
+
+      // Program Studi / Bidang Keilmuan: PAI & Umum
+      {
+        nama: "Muhammad Aidin, S.Sy.",
+        prodi: "PAI & Syariah / Umum",
+        deskripsi: "Kanal @muhammadaidin-ti4oz | Fikih kontemporer, pembinaan karakter santri mahasiswa & muamalah.",
+        youtubeUrl: "https://youtube.com/@muhammadaidin-ti4oz?si=Mms4WyoCnTKVdqXs",
+        avatarColor: "from-emerald-700 to-teal-800"
+      }
+    ];
+
+    let currentLecturersData = [...defaultLecturers];
+    let selectedYtProdi = 'all';
+
+    function normalizeYoutubeUrl(rawUrl) {
+      if (!rawUrl) return 'https://www.youtube.com/@stkipalhikmahsurabaya';
+      let url = rawUrl.trim();
+      if (url.startsWith('@')) return `https://www.youtube.com/${url}`;
+      if (!url.startsWith('http://') && !url.startsWith('https://')) return `https://${url}`;
+      return url;
+    }
+
+    function renderLecturers(lecturers) {
+      const container = document.getElementById('youtubeLecturersGrid');
+      if (!container) return;
+
+      const filtered = lecturers.filter(item => {
+        if (selectedYtProdi === 'all') return true;
+        const queryProdi = selectedYtProdi.toLowerCase();
+        return (
+          item.prodi.toLowerCase().includes(queryProdi) || 
+          item.nama.toLowerCase().includes(queryProdi) ||
+          item.deskripsi.toLowerCase().includes(queryProdi)
+        );
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-10 text-slate-400 dark:text-zinc-500 text-xs">
+            <i class="fa-brands fa-youtube text-3xl text-slate-300 dark:text-zinc-700 mb-2"></i>
+            <p class="font-semibold text-slate-600 dark:text-zinc-400">Tidak ada kanal dosen yang cocok untuk kategori prodi ini.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(dosen => {
+        const cleanName = dosen.nama.replace(/^(dr\.|drs\.|dra\.|prof\.|ustadz|ust\.|usth\.)\s*/i, '').trim();
+        const initial = cleanName.charAt(0) || 'D';
+        const safeUrl = normalizeYoutubeUrl(dosen.youtubeUrl);
+        
+        return `
+          <div class="searchable-card glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-zinc-800 hover:border-rose-500/50 dark:hover:border-rose-500/50 hover:shadow-lg hover:shadow-rose-500/10 transition-all duration-300 flex flex-col justify-between group" data-keywords="${dosen.nama} ${dosen.prodi} ${dosen.deskripsi} youtube online course daring kuliah">
+            <div>
+              <div class="flex items-start justify-between gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr ${dosen.avatarColor || 'from-rose-500 to-red-600'} text-white flex items-center justify-center font-bold text-lg shadow-md shadow-rose-500/20 group-hover:scale-105 transition-transform flex-shrink-0">
+                  <span>${initial}</span>
+                </div>
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-50 dark:bg-rose-950/70 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/60">
+                  <i class="fa-brands fa-youtube text-xs text-rose-600"></i>
+                  <span>Kanal Dosen</span>
+                </div>
+              </div>
+
+              <h3 class="text-base font-bold text-slate-900 dark:text-white mt-3 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+                ${dosen.nama}
+              </h3>
+              <p class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 mt-0.5">
+                ${dosen.prodi}
+              </p>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-2 leading-relaxed">
+                ${dosen.deskripsi}
+              </p>
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-slate-100 dark:border-zinc-800 flex items-center gap-2">
+              <a 
+                href="${safeUrl}" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onclick="celebrateClick()"
+                class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all"
+              >
+                <i class="fa-brands fa-youtube text-sm"></i>
+                <span>Tonton Kuliah</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+
+              <button 
+                onclick="copyToClipboard('${safeUrl}', 'Link Kanal YouTube ${dosen.nama} disalin!')" 
+                title="Salin Tautan Kanal"
+                class="p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors text-xs"
+              >
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterYtByProdi(prodiKey) {
+      selectedYtProdi = prodiKey;
+      const prodiBtns = document.querySelectorAll('.yt-prodi-btn');
+      prodiBtns.forEach(btn => {
+        btn.classList.remove('active', 'bg-rose-600', 'text-white');
+        btn.classList.add('bg-slate-100', 'dark:bg-zinc-800', 'text-slate-700', 'dark:text-zinc-300');
+      });
+
+      const activeBtn = Array.from(prodiBtns).find(b => b.getAttribute('onclick').includes(`'${prodiKey}'`));
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-slate-100', 'dark:bg-zinc-800', 'text-slate-700', 'dark:text-zinc-300');
+        activeBtn.classList.add('active', 'bg-rose-600', 'text-white');
+      }
+
+      renderLecturers(currentLecturersData);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderLecturers(currentLecturersData);
+    });
+
+    // 8. Documents Data & Content Generation for Unduhan
+    const docData = {
+      proposal: {
+        title: "Format Proposal Skripsi STKIP Al Hikmah (v2.0)",
+        subtitle: "Panduan seminar proposal dan format penulisan bab 1 sampai bab 3",
+        filename: "0 Format Proposal Skripsi STKIPH v 2.0.docx",
+        icon: "fa-regular fa-file-lines",
+        summaryHtml: `
+          <div class="space-y-3">
+            <div class="p-3 bg-indigo-50 dark:bg-indigo-950/50 rounded-xl border border-indigo-200 dark:border-indigo-800 text-xs">
+              <span class="font-bold text-indigo-700 dark:text-indigo-300">Ketentuan Judul Proposal:</span>
+              <p class="mt-0.5 text-slate-600 dark:text-zinc-300">Maksimal 15 kata dalam Bahasa Indonesia/Bahasa Inggris, font proporsional, serta memperhatikan penggunaan huruf kapital.</p>
+            </div>
+            <h4 class="font-bold text-slate-900 dark:text-white">Struktur Pokok Proposal Skripsi:</h4>
+            <ol class="list-decimal list-inside space-y-1 text-slate-600 dark:text-zinc-300 text-xs pl-1">
+              <li><strong>Halaman Judul</strong> (Logo STKIP Al Hikmah, Nama Mahasiswa, NIM, Prodi, Tahun)</li>
+              <li><strong>Halaman Persetujuan</strong> (Ditandatangani Pembimbing 1 & Pembimbing 2)</li>
+              <li><strong>Halaman Pengesahan</strong> (Dipertahankan di hadapan Dewan Penguji & Mengetahui Pimpinan)</li>
+              <li><strong>Daftar Isi</strong></li>
+              <li><strong>BAB 1 PENDAHULUAN:</strong> Latar Belakang, Rumusan Masalah, Tujuan Penelitian, Manfaat, Definisi/Batasan Istilah</li>
+              <li><strong>BAB 2 KAJIAN PUSTAKA:</strong> Landasan Teori, Kajian Penelitian Relevan, Kerangka Berpikir (Framework)</li>
+              <li><strong>BAB 3 METODE PENELITIAN:</strong> Jenis Penelitian, Subjek, Tempat & Waktu, Teknik Pengumpulan Data, Instrumen, Analisis Data</li>
+              <li><strong>Daftar Pustaka:</strong> Standar APA Style 7th Edition</li>
+            </ol>
+          </div>
+        `,
+        downloadContent: `JUDUL PROPOSAL SKRIPSI\n(maksimal 15 kata dalam Bahasa Indonesia)\nPROPOSAL SKRIPSI\n\n[LOGO STKIP AL HIKMAH]\n\nNAMA MAHASISWA:\nNIM:\nPROGRAM STUDI:\nSEKOLAH TINGGI KEGURUAN DAN ILMU PENDIDIKAN AL HIKMAH SURABAYA\n20XX\n\nHALAMAN PERSETUJUAN\nBAB 1 PENDAHULUAN\nBAB 2 KAJIAN PUSTAKA\nBAB 3 METODE PENELITIAN\nDAFTAR PUSTAKA (APA Style 7th)`
+      },
+      skripsi: {
+        title: "Format Skripsi Lengkap STKIP Al Hikmah (v2.0)",
+        subtitle: "Panduan ujian sidang sarjana lengkap Bab 1 sampai Bab 5 & Abstrak",
+        filename: "1 Format Skripsi STKIPH v 2.0.docx",
+        icon: "fa-solid fa-book-bookmark",
+        summaryHtml: `
+          <div class="space-y-3">
+            <div class="p-3 bg-purple-50 dark:bg-purple-950/50 rounded-xl border border-purple-200 dark:border-purple-800 text-xs">
+              <span class="font-bold text-purple-700 dark:text-purple-300">Surat Pernyataan Keaslian Bermeterai:</span>
+              <p class="mt-0.5 text-slate-600 dark:text-zinc-300">Mahasiswa wajib melampirkan surat pernyataan keaslian karya bermeterai Rp 10.000,- yang menyatakan karya bebas plagiasi.</p>
+            </div>
+            <h4 class="font-bold text-slate-900 dark:text-white">Struktur Komplit Naskah Skripsi:</h4>
+            <ul class="space-y-1.5 text-slate-600 dark:text-zinc-300 text-xs">
+              <li><strong>Halaman Judul & Persetujuan / Pengesahan Sidang</strong></li>
+              <li><strong>Surat Pernyataan Keaslian Karya</strong> (Meterai Rp 10.000)</li>
+              <li><strong>Abstrak Dwibahasa:</strong> Maksimal 150 kata (Bahasa Indonesia & Bahasa Inggris)</li>
+              <li><strong>BAB 1:</strong> Pendahuluan</li>
+              <li><strong>BAB 2:</strong> Kajian Pustaka</li>
+              <li><strong>BAB 3:</strong> Metode Penelitian</li>
+              <li><strong>BAB 4:</strong> Hasil Penelitian dan Pembahasan</li>
+              <li><strong>BAB 5:</strong> Simpulan dan Saran</li>
+              <li><strong>Daftar Pustaka:</strong> Standar APA Style 7th Edition</li>
+            </ul>
+          </div>
+        `,
+        downloadContent: `JUDUL SKRIPSI MAKSIMAL 15 KATA\nSKRIPSI\nDiajukan kepada STKIP Al Hikmah untuk memenuhi persyaratan perolehan gelar Sarjana Pendidikan\n\nNAMA MAHASISWA:\nNIM:\nPROGRAM STUDI:\nSEKOLAH TINGGI KEGURUAN DAN ILMU PENDIDIKAN AL HIKMAH SURABAYA\n20XX\n\nSURAT PERNYATAAN BEBAS PLAGIASI (Meterai Rp 10.000)\nABSTRAK\nBAB 1 PENDAHULUAN\nBAB 2 KAJIAN PUSTAKA\nBAB 3 METODE PENELITIAN\nBAB 4 HASIL DAN PEMBAHASAN\nBAB 5 SIMPULAN DAN SARAN\nDAFTAR PUSTAKA`
+      },
+      mbkm: {
+        title: "Buku Panduan Teknis MBKM 2025 STKIP Al Hikmah",
+        subtitle: "SK No. 257/A.2.1/STKIPH/II/2025 - Implementasi MBKM Kelas Kerjasama",
+        filename: "PANDUAN TEKNIS MBKM 2025 STKIP AL HIKMAH.pdf",
+        icon: "fa-solid fa-book-open-reader",
+        summaryHtml: `
+          <div class="space-y-3">
+            <div class="p-3 bg-teal-50 dark:bg-teal-950/50 rounded-xl border border-teal-200 dark:border-teal-800 text-xs">
+              <span class="font-bold text-teal-700 dark:text-teal-300">Ketentuan MBKM STKIP Al Hikmah:</span>
+              <p class="mt-0.5 text-slate-600 dark:text-zinc-300">Hak belajar di luar prodi/kampus maks 2 semester. Konversi maksimal 20 SKS/semester (Asistensi Mengajar & Magang).</p>
+            </div>
+            <h4 class="font-bold text-slate-900 dark:text-white">Poin-Poin Pokok Panduan Teknis:</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800">
+                <span class="font-semibold text-indigo-600 dark:text-indigo-400">1. Asistensi Mengajar</span>
+                <p class="mt-1 text-slate-600 dark:text-zinc-400">Praktik guru di sekolah formal: RPP/Modul Ajar, media ajar, LKS, evaluasi, integrasi nilai Islam, bimbingan siswa.</p>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800">
+                <span class="font-semibold text-indigo-600 dark:text-indigo-400">2. Magang Santri / Ponpes</span>
+                <p class="mt-1 text-slate-600 dark:text-zinc-400">Hafalan Al-Qur'an, TPQ, Madrasah Diniyah, bahasa Arab, imam rawatib, khutbah, manajemen panti/pondok.</p>
+              </div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 text-xs text-amber-800 dark:text-amber-300">
+              <strong>Eviden Wajib:</strong> Video Mengajar dan Logbook Harian berparaf pamong.
+            </div>
+          </div>
+        `,
+        downloadContent: `PETUNJUK TEKNIS IMPLEMENTASI KEGIATAN MBKM 2025\nKELAS KERJASAMA STKIP AL HIKMAH SURABAYA\nNo. 257/A.2.1/STKIPH/II/2025\n\nA. KETENTUAN UMUM\n1. Maksimal 20 SKS per semester diakui.\n2. Rapat pleno prodi & validasi asesor menetapkan konversi.\n\nB. BENTUK KEGIATAN\n1. Asistensi Mengajar di Sekolah Formal\n2. Magang Pesantren / Santri Mandiri\n\nC. EVIDEN WAJIB\n- Video Real Teaching\n- Logbook Aktivitas Harian`
+      }
+    };
+
+    let activeDocKey = 'proposal';
+
+    function openDocPreview(key) {
+      activeDocKey = key;
+      const data = docData[key];
+      if (!data) return;
+
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalSubtitle').textContent = data.subtitle;
+      document.getElementById('modalContent').innerHTML = data.summaryHtml;
+      
+      const dlBtn = document.getElementById('modalDownloadBtn');
+      dlBtn.onclick = function() {
+        downloadDocument(key);
+      };
+
+      const modal = document.getElementById('previewModal');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        modal.classList.add('opacity-100');
+      }, 10);
+    }
+
+    function closeDocPreview() {
+      const modal = document.getElementById('previewModal');
+      modal.classList.remove('opacity-100');
+      modal.classList.add('opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    function downloadDocument(key) {
+      const data = docData[key];
+      if (!data) return;
+
+      const blob = new Blob([data.downloadContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.href = url;
+      downloadAnchor.download = data.filename.replace('.docx', '.txt');
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      document.body.removeChild(downloadAnchor);
+      URL.revokeObjectURL(url);
+
+      celebrateClick();
+      showToast(`Mengunduh draf template: ${data.filename}`);
+    }
+
+    // 9. Live Search & Category Filtering
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearch');
+    const allFilterSections = document.querySelectorAll('.filter-section');
+    const noResults = document.getElementById('noResultsMessage');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    let currentCategory = 'all';
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      filterButtons.forEach(btn => {
+        btn.classList.remove('active', 'bg-white', 'text-indigo-900');
+        btn.classList.add('bg-white/10', 'text-white');
+      });
+
+      const activeBtn = Array.from(filterButtons).find(b => b.getAttribute('onclick').includes(cat));
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-white/10', 'text-white');
+        activeBtn.classList.add('active', 'bg-white', 'text-indigo-900');
+      }
+
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const query = searchInput.value.toLowerCase().trim();
+      let totalVisible = 0;
+
+      allFilterSections.forEach(section => {
+        const secCat = section.getAttribute('data-cat');
+        const matchCategory = (currentCategory === 'all' || currentCategory === secCat);
+
+        if (!matchCategory) {
+          section.style.display = 'none';
+        } else {
+          section.style.display = 'block';
+          const cards = section.querySelectorAll('.searchable-card');
+          let sectionVisibleCardCount = 0;
+
+          cards.forEach(card => {
+            const keywords = (card.getAttribute('data-keywords') || '') + ' ' + card.innerText;
+            const matchQuery = !query || keywords.toLowerCase().includes(query);
+
+            if (matchQuery) {
+              card.style.display = card.tagName === 'A' || card.classList.contains('flex') ? 'flex' : 'block';
+              sectionVisibleCardCount++;
+              totalVisible++;
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          if (query && sectionVisibleCardCount === 0) {
+            section.style.display = 'none';
+          }
+        }
+      });
+
+      if (totalVisible === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      if (e.target.value.trim().length > 0) {
+        clearSearchBtn.classList.remove('hidden');
+      } else {
+        clearSearchBtn.classList.add('hidden');
+      }
+      applyFilters();
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      clearSearchBtn.classList.add('hidden');
+      applyFilters();
+      searchInput.focus();
+    });
+
+    // 10. Share Modal & Dynamic QR Code
+    let qrInstance = null;
+    function openShareModal() {
+      const modal = document.getElementById('shareModal');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        modal.classList.add('opacity-100');
+      }, 10);
+
+      if (!qrInstance) {
+        const currentUrl = window.location.href || 'https://stkipalhikmah.ac.id';
+        qrInstance = new QRCode(document.getElementById('qrcode'), {
+          text: currentUrl,
+          width: 170,
+          height: 170,
+          colorDark: "#1e1b4b",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      }
+    }
+
+    function closeShareModal() {
+      const modal = document.getElementById('shareModal');
+      modal.classList.remove('opacity-100');
+      modal.classList.add('opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    // Modal Keyboard ESC & Outside Click Listener
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDocPreview();
+        closeShareModal();
+      }
+    });
+
+    document.getElementById('previewModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('previewModal')) {
+        closeDocPreview();
+      }
+    });
+
+    document.getElementById('shareModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('shareModal')) {
+        closeShareModal();
+      }
+    });
+  </script>
+</body>
+</html>
